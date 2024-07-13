@@ -3,10 +3,18 @@ Beej's Guide to Network Programming
 ===================================
 
 Stream Sockets (``SOCK_STREAM``)
-    Reliable two-way connected communication streams.
+    Reliable two-way connected communication streams.  Used by TCP, *The
+    Transmission Control Protocol* (see `RFC 793
+    <https://tools.ietf.org/html/rfc793>`_).  TCP makes sure your data arrives
+    sequentially and error-free.
+
+    The IP, *Internet Protocol*, is the routing portion (`RFC 791
+    <https://tools.ietf.org/html/rfc791>`_) of both TCP/IP and UDP/IP.
 
 Datagam Sockets (``SOCK_DGRAM``)
-    Also called "connectionless sockets".
+    Also called "connectionless sockets".  Used by UDP, *User Datagram
+    Protocol* (see `RFC 768 <https://tools.ietf.org/html/rfc768>`_).  The data
+    may arrive out of order, but it will be correct in case it arrives.
 
 Layered Network Model
     ISO/OSI 7 layers, which is very generic, is something like:
@@ -67,3 +75,12 @@ IPv6
     You can represent a subnet my appending the number of bits of the netmask
     after the address, e.g. ``2001:db8::/32`` or
     ``2001:db8:5413:4028::9db9/64``.
+
+Port numbers
+    If there are two or more applications in a computer using TCP or UDP, then
+    it is not sufficient to specify the IP address of the computer.  That's why
+    we have *port numbers*, which are 16-bit numbers used to differentiate
+    applications in a host.  For example, Web Servers use port 80 to serve web
+    pages using HTTP, or 443 for HTTPS.  Port numbers ``<1024`` are generally
+    reserved for special applications and processes that use those ports may
+    need special OS privileges.
