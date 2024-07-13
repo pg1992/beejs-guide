@@ -115,3 +115,33 @@ Byte order
      ``ntohs()``   network to host ``short`` 
      ``ntohl()``   network to host ``long``  
     ============= ===========================
+
+``struct``\ s and descriptors
+    A *socket descriptor* is just an
+
+    .. code-block:: c
+
+        int
+
+    Which is deceptively simple...  But since everything in Unix is a file (or,
+    more precisely, a *file descriptor*) then it is not that weird.
+
+``struct addrinfo``
+    Before creating connections and all that fun stuff, we need a way to
+    to store address information, and also to retrieve it.
+
+    .. code-block:: c
+        :linenos:
+
+        struct addrinfo {
+            int              ai_flags;     // AI_PASSIVE, AI_CANONNAME, etc.
+            int              ai_family;    // AF_INET, AF_INET6, AF_UNSPEC
+            int              ai_socktype;  // SOCK_STREAM, SOCK_DGRAM
+            int              ai_protocol;  // use 0 for "any"
+            size_t           ai_addrlen;   // size of ai_addr in bytes
+            struct sockaddr *ai_addr;      // struct sockaddr_in or _in6
+            char            *ai_canonname; // full canonical hostname
+
+            struct addrinfo *ai_next;      // linked list, next node
+        };
+
