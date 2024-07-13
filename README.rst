@@ -84,3 +84,34 @@ Port numbers
     pages using HTTP, or 443 for HTTPS.  Port numbers ``<1024`` are generally
     reserved for special applications and processes that use those ports may
     need special OS privileges.
+
+Byte order
+    There are two possible ways to store multi-byte data in memory:
+
+    #. **Big-endian**: the MSB (*Most Significant Byte*) is stored first at
+       lower addresses, e.g. ``b3cf`` would be stored as ``b3`` in memory
+       address ``a``, and ``cf`` would be stored in memory address ``a + 1``.
+       Hence the name *Big-endian*, because the *big end* is stored first.
+    #. **Little-endian**: the opposite of *Big-endian*, where the LSB (*Least
+       Significant Byte*) is stored first, e.g. ``b3cf`` is stored in memory as
+       ``cf`` in address ``a`` and ``b3`` in address ``a + 1``.
+
+    *Network Byte Order* is the byte order that network applications
+    communicate.  It was defined (arbitrarily) to work in **big-endian**, which
+    means that the MSB is sent first.  Conversely, the host may work with a
+    different *endianness* (e.g. Intel processors work with
+    *little-endian*, and you can check your host by running the ``lscpu``
+    command which is part of the ``util-linux`` package in Arch Linux), which
+    is known as *Host Byte Order*.  Applications must be aware about this in
+    order to be portable, that's why we should never trust the *Host Byte
+    Order* and use convenient functions to convert between each representation.
+    Those functions are:
+
+    ============= ===========================
+     Function      Description
+    ============= ===========================
+     ``htons()``   host to network ``short`` 
+     ``htonl()``   host to network ``long``  
+     ``ntohs()``   network to host ``short`` 
+     ``ntohl()``   network to host ``long``  
+    ============= ===========================
