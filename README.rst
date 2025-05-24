@@ -127,8 +127,8 @@ Byte order
     more precisely, a *file descriptor*) then it is not that weird.
 
 ``struct addrinfo``
-    Before creating connections and all that fun stuff, we need a way to
-    to store address information, and also to retrieve it.
+    Before creating connections and all that fun stuff, we need a way to store
+    address information, and also to retrieve it.
 
     .. code-block:: c
         :linenos:
