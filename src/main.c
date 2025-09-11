@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
@@ -67,6 +68,12 @@ int main(int argc, char *argv[])
 
     // ... do everything until you don't need servinfo anymore ...
     freeaddrinfo(servinfo);  // free the linked-list
+
+    char hostname[32];
+    size_t host_len = sizeof hostname;
+
+    gethostname(hostname, host_len);
+    printf("hostname: %s\n", hostname);
 
     return EXIT_SUCCESS;
 }
