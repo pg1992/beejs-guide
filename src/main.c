@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     int status;
     struct addrinfo hints;
-    struct addrinfo *servinfo;  // will point to the results
+    struct addrinfo *servinfo, *rp;  // will point to the results
 
     memset(&hints, 0, sizeof hints);    // make sure the struct is empty
     hints.ai_family = AF_UNSPEC;        // don't care IPv4 or IPv6
@@ -24,6 +24,27 @@ int main(int argc, char *argv[])
     }
 
     // servinfo now points to a linked list of 1 or more struct addrinfos
+    for (rp = servinfo; rp != NULL; rp = rp->ai_next)
+    {
+        switch (rp->ai_family)
+        {
+        case AF_INET:
+            char ip4[INET_ADDRSTRLEN];
+            struct sockaddr_in *sa = (struct sockaddr_in *)rp->ai_addr;
+            inet_ntop(AF_INET, &(sa->sin_addr), ip4, INET_ADDRSTRLEN);
+            printf("IPv4: %s.\n", ip4);
+            break;
+        case AF_INET6:
+            char ip6[INET6_ADDRSTRLEN];
+            struct sockaddr_in6 *sa6 = (struct sockaddr_in6 *)rp->ai_addr;
+            inet_ntop(AF_INET6, &(sa6->sin6_addr), ip6, INET6_ADDRSTRLEN);
+            printf("IPv6: %s.\n", ip6);
+            break;
+        default:
+            printf("Unknown address family.\n");
+            break;
+        }
+    }
 
     // IPv4:
     char ip4[INET_ADDRSTRLEN];  // space to hold the IPv4 string
